@@ -14,6 +14,10 @@ type Config struct {
 	JwtExpiryInDays        int
 	JwtRefreshExpiryInDays int
 
+	SupabaseURL string
+	SupabaseAPIKey string
+	SupabaseBucketName string
+
 	DBHost     string
 	DBPort     string
 	DBUser     string
@@ -38,6 +42,10 @@ func LoadConfig() *Config {
 		JwtSecretKey:           getEnv("JWT_SECRET_KEY", "default-secret"),
 		JwtExpiryInDays:        jwtExpiry,
 		JwtRefreshExpiryInDays: refreshExpiry,
+
+		SupabaseURL: getEnv("SUPABASE_URL", ""),
+		SupabaseAPIKey: getEnv("SUPABASE_API_KEY", ""),
+		SupabaseBucketName: getEnv("SUPABASE_BUCKET_NAME", ""),
 
 		DBHost:     getEnv("DB_HOST", "localhost"),
 		DBPort:     getEnv("DB_PORT", "5432"),

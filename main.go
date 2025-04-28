@@ -10,6 +10,7 @@ import (
 	"github.com/joho/godotenv"
 
 	"github.com/setyadi-law-firm/setyadi-be/app/auth"
+	"github.com/setyadi-law-firm/setyadi-be/app/image"
 	"github.com/setyadi-law-firm/setyadi-be/app/models"
 )
 
@@ -32,6 +33,7 @@ func main() {
 	r := gin.Default()
 
 	auth.AuthRoutes(r, db, config)
+	image.ImageRoutes(r, config)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatal("failed to start server:", err)
