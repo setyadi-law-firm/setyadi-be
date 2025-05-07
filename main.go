@@ -10,6 +10,7 @@ import (
 	"github.com/joho/godotenv"
 
 	"github.com/setyadi-law-firm/setyadi-be/app/auth"
+	"github.com/setyadi-law-firm/setyadi-be/app/report"
 	"github.com/setyadi-law-firm/setyadi-be/app/image"
 	"github.com/setyadi-law-firm/setyadi-be/app/models"
 )
@@ -29,11 +30,15 @@ func main() {
 	if err := db.AutoMigrate(&auth.User{}); err != nil {
 		log.Fatal("failed to migrate user model:", err)
 	}
+	if err := db.AutoMigrate(&report.Report{}); err != nil {
+		log.Fatal("failed to migrate user model:", err)
+	}
 
 	r := gin.Default()
 
 	auth.AuthRoutes(r, db, config)
 	image.ImageRoutes(r, config)
+	report.ReportRoutes(r, db)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatal("failed to start server:", err)
