@@ -90,6 +90,15 @@ func (h *ReportHandler) DeleteReport(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"message": "Report deleted successfully"})
 }
 
+func (h *ReportHandler) DeleteAllReports(c *gin.Context) {
+    if err := h.service.DeleteAllReports(); err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"message": "Report deleted successfully"})
+}
+
 func (h *ReportHandler) ListReports(c *gin.Context) {
     reports, err := h.service.ListReports()
     if err != nil {

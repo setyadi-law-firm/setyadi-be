@@ -56,6 +56,4 @@ curl --location --request DELETE 'http://localhost:8080/api/reports/<REPORT_ID>'
 ```
 
 # Note
-1. No Authorization (yet), by default, the uploading user id is 1
-2. Following (1), there is no middleware (yet)
-3. No protection for supabase uploading
+1. For `GET /api/reports`, the content are trimmed to the first 200 characters

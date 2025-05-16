@@ -13,7 +13,7 @@ func AuthRoutes(r *gin.Engine, db *gorm.DB, config *models.Config) {
 	service := NewAuthService(repo, util)
 	handler := NewAuthHandler(service)
 
-	authGroup := r.Group("/auth")
+	authGroup := r.Group("/api/auth")
 	{
 		authGroup.POST("/register", handler.Register)
 		authGroup.POST("/login", handler.Login)

@@ -36,9 +36,11 @@ func main() {
 
 	r := gin.Default()
 
+	authUtil := auth.NewUtil(config)
+
 	auth.AuthRoutes(r, db, config)
-	image.ImageRoutes(r, config)
-	report.ReportRoutes(r, db)
+	image.ImageRoutes(r, config, authUtil)
+	report.ReportRoutes(r, db, authUtil)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatal("failed to start server:", err)

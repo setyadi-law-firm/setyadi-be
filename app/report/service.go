@@ -9,7 +9,8 @@ type ReportService interface {
     GetReport(id uuid.UUID) (*Report, error)
     UpdateReport(id uuid.UUID, input UpdateReportRequest) (*Report, error)
     DeleteReport(id uuid.UUID) error
-    ListReports() ([]Report, error)
+    DeleteAllReports() error
+    ListReports() ([]*Report, error)
 }
 
 type reportService struct {
@@ -24,7 +25,8 @@ func (s *reportService) CreateReport(input CreateReportRequest, authorID uint) (
     report := &Report{
         Title:    input.Title,
         Content:  input.Content,
-        AuthorID: authorID,
+        Author: input.Author,
+        ImageURL: input.ImageURL,
     }
     if err := s.repo.Create(report); err != nil {
         return nil, err
@@ -48,6 +50,9 @@ func (s *reportService) UpdateReport(id uuid.UUID, input UpdateReportRequest) (*
     if input.Content != "" {
         report.Content = input.Content
     }
+    if input.ImageURL != "" {
+        report.ImageURL = input.ImageURL
+    }
 
     if err := s.repo.Update(report); err != nil {
         return nil, err
@@ -59,6 +64,10 @@ func (s *reportService) DeleteReport(id uuid.UUID) error {
     return s.repo.Delete(id)
 }
 
-func (s *reportService) ListReports() ([]Report, error) {
-    return s.repo.GetAll()
+func (s *reportService) DeleteAllReports() error {
+    return s.repo.DeleteAll()
+}
+
+func (s *reportService) ListReports() ([]*Report, error) {
+    return s.repo.GetAllTrimmedContent()
 }
