@@ -9,7 +9,7 @@ type ReportService interface {
     GetReport(id uuid.UUID) (*Report, error)
     UpdateReport(id uuid.UUID, input UpdateReportRequest) (*Report, error)
     DeleteReport(id uuid.UUID) error
-    DeleteAllReports() error
+    BulkDeleteReports(ids []uuid.UUID) error
     ListReports() ([]*Report, error)
 }
 
@@ -64,8 +64,8 @@ func (s *reportService) DeleteReport(id uuid.UUID) error {
     return s.repo.Delete(id)
 }
 
-func (s *reportService) DeleteAllReports() error {
-    return s.repo.DeleteAll()
+func (s *reportService) BulkDeleteReports(ids []uuid.UUID) error {
+	return s.repo.BulkDelete(ids)
 }
 
 func (s *reportService) ListReports() ([]*Report, error) {

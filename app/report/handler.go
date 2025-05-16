@@ -90,13 +90,19 @@ func (h *ReportHandler) DeleteReport(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"message": "Report deleted successfully"})
 }
 
-func (h *ReportHandler) DeleteAllReports(c *gin.Context) {
-    if err := h.service.DeleteAllReports(); err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-        return
-    }
+func (h *ReportHandler) BulkDeleteReports(c *gin.Context) {
+	var req BulkDeleteRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
 
-    c.JSON(http.StatusOK, gin.H{"message": "Report deleted successfully"})
+	if err := h.service.BulkDeleteReports(req.ReportIDs); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Reports deleted successfully"})
 }
 
 func (h *ReportHandler) ListReports(c *gin.Context) {

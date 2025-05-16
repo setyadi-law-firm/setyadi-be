@@ -18,7 +18,7 @@ func ReportRoutes(r *gin.Engine, db *gorm.DB, authUtil *auth.Util) {
         reportGroup.GET("", handler.ListReports)
         reportGroup.GET("/:id", handler.GetReport)
         reportGroup.PUT("/:id", handler.UpdateReport)
-        reportGroup.DELETE("/", handler.DeleteAllReports)
+        reportGroup.DELETE("/bulk", handler.BulkDeleteReports)
         reportGroup.DELETE("/:id", handler.DeleteReport)
     }
 }

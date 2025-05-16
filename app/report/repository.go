@@ -13,7 +13,7 @@ type ReportRepository interface {
     GetByID(id uuid.UUID) (*Report, error)
     Update(report *Report) error
     Delete(id uuid.UUID) error
-    DeleteAll() error
+    BulkDelete(ids []uuid.UUID) error
     GetAll() ([]*Report, error)
     GetAllTrimmedContent() ([]*Report, error)
 }
@@ -46,8 +46,8 @@ func (r *GormReportRepository) Delete(id uuid.UUID) error {
     return r.db.Delete(&Report{}, "id = ?", id).Error
 }
 
-func (r *GormReportRepository) DeleteAll() error {
-    return r.db.Unscoped().Delete(&Report{}).Error
+func (r *GormReportRepository) BulkDelete(ids []uuid.UUID) error {
+	return r.db.Delete(&Report{}, "id IN ?", ids).Error
 }
 
 func (r *GormReportRepository) GetAll() ([]*Report, error) {

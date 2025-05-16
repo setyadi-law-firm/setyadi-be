@@ -43,6 +43,7 @@ curl --location 'http://localhost:8080/api/reports/<REPORT_ID>'
 ```bash
 curl --location --request PUT 'http://localhost:8080/api/reports/df5c69b3-73a9-4078-b08c-b224bb6fa626' \
 --header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <ACCESSTOKEN>' \
 --data '{
     "title": "Cara belajar 2",
     "content": "Yuk belajar adpro"
@@ -53,6 +54,17 @@ curl --location --request PUT 'http://localhost:8080/api/reports/df5c69b3-73a9-4
 ![alt text](public/reports-delete-by-id.png)
 ```bash
 curl --location --request DELETE 'http://localhost:8080/api/reports/<REPORT_ID>' 
+```
+
+### Bulk Delete
+![alt text](public/reports-delete-bulk.png)
+```bash
+curl --location --request DELETE 'http://localhost:8080/api/reports/bulk' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <ACCESSTOKEN>' \
+--data '{
+    "report_ids": ["a808cc68-043e-47e7-8aed-a53c51d648e3", "df5c69b3-73a9-4078-b08c-b224bb6fa626"]
+}'
 ```
 
 # Note
