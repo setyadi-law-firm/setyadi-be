@@ -14,8 +14,8 @@ type Config struct {
 	JwtExpiryInDays        int
 	JwtRefreshExpiryInDays int
 
-	SupabaseURL string
-	SupabaseAPIKey string
+	SupabaseURL        string
+	SupabaseAPIKey     string
 	SupabaseBucketName string
 
 	DBHost     string
@@ -23,6 +23,7 @@ type Config struct {
 	DBUser     string
 	DBPassword string
 	DBName     string
+	DBSSLMode  string
 }
 
 func LoadConfig() *Config {
@@ -43,22 +44,22 @@ func LoadConfig() *Config {
 		JwtExpiryInDays:        jwtExpiry,
 		JwtRefreshExpiryInDays: refreshExpiry,
 
-		SupabaseURL: getEnv("SUPABASE_URL", ""),
-		SupabaseAPIKey: getEnv("SUPABASE_API_KEY", ""),
+		SupabaseURL:        getEnv("SUPABASE_URL", ""),
+		SupabaseAPIKey:     getEnv("SUPABASE_API_KEY", ""),
 		SupabaseBucketName: getEnv("SUPABASE_BUCKET_NAME", ""),
-
-		DBHost:     getEnv("DB_HOST", "localhost"),
-		DBPort:     getEnv("DB_PORT", "5432"),
-		DBUser:     getEnv("DB_USER", "postgres"),
-		DBPassword: getEnv("DB_PASSWORD", ""),
-		DBName:     getEnv("DB_NAME", "authdb"),
+		DBHost:             getEnv("DB_HOST", "localhost"),
+		DBPort:             getEnv("DB_PORT", "5432"),
+		DBUser:             getEnv("DB_USER", "postgres"),
+		DBPassword:         getEnv("DB_PASSWORD", ""),
+		DBName:             getEnv("DB_NAME", "authdb"),
+		DBSSLMode:          getEnv("DB_SSL_MODE", "disable"),
 	}
 }
 
 func (c *Config) Dsn() string {
 	return fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta",
-		c.DBHost, c.DBUser, c.DBPassword, c.DBName, c.DBPort,
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=Asia/Jakarta",
+		c.DBHost, c.DBUser, c.DBPassword, c.DBName, c.DBPort, c.DBSSLMode,
 	)
 }
 
