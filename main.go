@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
@@ -35,6 +36,18 @@ func main() {
 	}
 
 	r := gin.Default()
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{
+			"https://www.dssetyadipartners.com",
+		},
+		AllowHeaders: []string{
+			"Origin", "Content-Type", "Authorization",
+		},
+		AllowMethods: []string{
+			"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH",
+		},
+		AllowCredentials: true,
+	}))
 
 	authUtil := auth.NewUtil(config)
 
