@@ -39,6 +39,7 @@ func main() {
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			"https://www.dssetyadipartners.com",
+			"https://setyadi-fe.vercel.app",
 		},
 		AllowHeaders: []string{
 			"Origin", "Content-Type", "Authorization",
