@@ -18,6 +18,10 @@ type Config struct {
 	SupabaseAPIKey     string
 	SupabaseBucketName string
 
+	CloudinaryCloudName    string
+	CloudinaryAPIKey string
+	CloudinaryAPISecret string
+
 	DBHost     string
 	DBPort     string
 	DBUser     string
@@ -47,6 +51,9 @@ func LoadConfig() *Config {
 		SupabaseURL:        getEnv("SUPABASE_URL", ""),
 		SupabaseAPIKey:     getEnv("SUPABASE_API_KEY", ""),
 		SupabaseBucketName: getEnv("SUPABASE_BUCKET_NAME", ""),
+		CloudinaryCloudName: getEnv("CLOUDINARY_CLOUD_NAME", ""),
+		CloudinaryAPIKey: getEnv("CLOUDINARY_API_KEY", ""),
+		CloudinaryAPISecret: getEnv("CLOUDINARY_API_SECRET", ""),
 		DBHost:             getEnv("DB_HOST", "localhost"),
 		DBPort:             getEnv("DB_PORT", "5432"),
 		DBUser:             getEnv("DB_USER", "postgres"),

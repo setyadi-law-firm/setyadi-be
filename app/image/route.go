@@ -7,13 +7,18 @@ import (
 )
 
 func ImageRoutes(r *gin.Engine, config *models.Config, authUtil *auth.Util) {
-    supabase := NewSupabase(config)
-    service := NewImageService(supabase)
-    handler := NewImageHandler(service)
+    imageService := NewImageService(
+        config.CloudinaryCloudName,
+        config.CloudinaryAPIKey,
+        config.CloudinaryAPISecret,
+    )
 
-    imageGroup := r.Group("/images")
-    imageGroup.Use(authUtil.JwtAuthMiddleware())
-    {
-        imageGroup.POST("", handler.UploadImage)
-    }
+
+	handler := NewImageHandler(imageService)
+
+	imageGroup := r.Group("/images")
+	imageGroup.Use(authUtil.JwtAuthMiddleware())
+	{
+		imageGroup.POST("", handler.UploadImage)
+	}
 }
