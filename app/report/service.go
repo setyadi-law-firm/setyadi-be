@@ -47,6 +47,9 @@ func (s *reportService) UpdateReport(id uuid.UUID, input UpdateReportRequest) (*
     if input.Title != "" {
         report.Title = input.Title
     }
+    if input.Author != "" {
+        report.Author = input.Author
+    }
     if input.Content != "" {
         report.Content = input.Content
     }
