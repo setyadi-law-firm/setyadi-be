@@ -12,13 +12,12 @@ func ReportRoutes(r *gin.Engine, db *gorm.DB, authUtil *auth.Util) {
     handler := NewReportHandler(service)
 
     reportGroup := r.Group("/api/reports")
-    reportGroup.Use(authUtil.JwtAuthMiddleware())
     {
-        reportGroup.POST("", handler.CreateReport)
+        reportGroup.POST("", authUtil.JwtAuthMiddleware(), handler.CreateReport)
         reportGroup.GET("", handler.ListReports)
         reportGroup.GET("/:id", handler.GetReport)
-        reportGroup.PUT("/:id", handler.UpdateReport)
-        reportGroup.DELETE("/bulk", handler.BulkDeleteReports)
-        reportGroup.DELETE("/:id", handler.DeleteReport)
+        reportGroup.PUT("/:id", authUtil.JwtAuthMiddleware(), handler.UpdateReport)
+        reportGroup.DELETE("/bulk", authUtil.JwtAuthMiddleware(), handler.BulkDeleteReports)
+        reportGroup.DELETE("/:id", authUtil.JwtAuthMiddleware(), handler.DeleteReport)
     }
 }
